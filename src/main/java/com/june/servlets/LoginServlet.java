@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.june.servlets.modal.User;
+import com.june.servlets.service.UserService;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -30,12 +33,15 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		String fName= request.getParameter("firstName");
-		String lName= request.getParameter("lastName");
+		//String fName= request.getParameter("firstName");
+		//String lName= request.getParameter("lastName");
+		
+
+		int userId= Integer.parseInt(request.getParameter("userID"));
 		ServletContext context= request.getServletContext();
 		
 		HttpSession session= request.getSession();
-		if(fName!=null && lName!=null) {
+	/*	if(fName!=null && lName!=null) {
 		session.setAttribute("fName", fName);
 		session.setAttribute("lName", lName);
 		context.setAttribute("fName", fName);
@@ -51,6 +57,29 @@ public class LoginServlet extends HttpServlet {
 		writer.println("Hello From Context"+context.getAttribute("fName")+" "+context.getAttribute("lName") +"<br>");
 
 		writer.println("Hello "+fName+" "+lName +"</h1><body/></html>");
+		
+		*/
+		UserService userService= new UserService();
+		
+		 boolean isUserExists = userService.isUserExists(userId);
+		 
+		 if(isUserExists) {
+			 
+			 User user = userService.getUser(userId);
+			 request.setAttribute("user", user);
+			 session.setAttribute("user", user);
+			 context.setAttribute("user", user);
+			 
+			 request.getRequestDispatcher("Success.jsp").forward(request, response);
+			 
+		 }
+		 else {
+			 
+			 response.sendRedirect("Login.html");
+		 }
+		
+		
+		
 		
 	}
 
