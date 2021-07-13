@@ -21,7 +21,6 @@ public class UserService {
 	public User getUser(int userId) {
 		
 		User user = userDao.getUser(userId);
-		user.setUserName("IMCSUser");
 		return user;
 	}
 

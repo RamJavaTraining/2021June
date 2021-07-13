@@ -18,6 +18,7 @@ public int add(int a, int b){
 
 <% 
   out.println("Hello Request Mr." + ((User)request.getAttribute("user")).getUserName());
+out.println("Hello Request UserID Mr." + ((User)request.getAttribute("user")).getUserId());
   out.println("Hello Session Mr." + ((User)session.getAttribute("user")).getUserName());
   out.println("Hello Application Mr." + ((User)application.getAttribute("user")).getUserName());
   
